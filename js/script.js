@@ -161,7 +161,7 @@ function watchLocation(resolve, reject) {
                     accuracy: acc,
                     timestamp: position.timestamp
                 };
-                // hentikan pencarian lokasi jika sudah kurang dari < 10 meter
+                // berhenti search jika akurasi < 10 meter
                 if (acc < 10) {
                     stopWatching();
                     resolve(bestLocation);
@@ -212,10 +212,6 @@ if (allowLocationBtn) {
                 localStorage.setItem('kitabku_location', encrypted);
 
                 reverseGeocode(locData.latitude, locData.longitude, address => {
-                    let accuracyNote = '';
-                    if (locData.accuracy > 50) {
-                        accuracyNote = '<p style="color: #cc0000; font-weight: bold;">⚠️ Akurasi lokasi rendah (>50 meter). Jadwal adzan mungkin kurang presisi. Untuk hasil terbaik, pastikan GPS aktif dan coba lagi di tempat terbuka.</p>';
-                    }
                     let locationInfo = `<p>Lokasi anda berhasil didapatkan:</p>
                         <p>Latitude: ${locData.latitude}<br>Longitude: ${locData.longitude}<br>Akurasi: ${locData.accuracy} meter<br>Timestamp: ${new Date(locData.timestamp).toLocaleString()}</p>`;
                     if (address) {
@@ -223,8 +219,11 @@ if (allowLocationBtn) {
                     } else {
                         locationInfo += `<p>Alamat tidak dapat ditemukan! Pastikan GPS diperangkat anda aktif, terima kasih.</p>`;
                     }
+                    // Tambahkan peringatan jika akurasi > 50 meter
+                    if (locData.accuracy > 50) {
+                        locationInfo += `<p style="color: #cc0000; font-weight: bold;">⚠️ Akurasi lokasi ${locData.accuracy} meter (di atas 50m). Jadwal adzan mungkin kurang presisi. Untuk hasil terbaik, pastikan Anda di luar ruangan dengan sinyal GPS jelas.</p>`;
+                    }
                     locationInfo += `<p>Terima kasih telah mengizinkan akses lokasi anda. Jadwal adzan akan kami buat menggunakan penyesuaian dari lokasi anda.</p>`;
-                    locationInfo += accuracyNote;
                     locationResultMessage.innerHTML = locationInfo;
                     openModal(locationResultModal);
                 });
@@ -249,7 +248,7 @@ if (denyLocationBtn) {
         closeModal(locationPermissionModal);
         stopWatching();
         sessionStorage.setItem('locationPermissionDenied', 'true');
-        locationResultMessage.innerHTML = '<p>Anda menolak izin lokasi! Fitur alarm adzan tidak akan berfungsi karena jadwal adzan belum dibuat. Anda dapat mengaktifkannya kembali dengan cara berpindah halaman atau refresh browser, terima kasih.</p>';
+        locationResultMessage.innerHTML = '<p>Anda menolak izin lokasi! Fitur alarm adzan tidak akan berfungsi karena jadwal adzan belom dibuat. Anda dapat mengaktifkannya kembali dengan cara berpindah halaman atau refresh browser, terima kasih.</p>';
         openModal(locationResultModal);
     });
 }
