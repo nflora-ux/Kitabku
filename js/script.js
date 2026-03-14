@@ -30,6 +30,8 @@ let alarmAudio = null;
 let adzanAudio = null;
 let sapaAudio = null;
 let checkPrayerInterval = null;
+let locationWatchId = null;
+let bestLocation = null;
 
 function openModal(modal) {
     if (modal) modal.classList.add('show');
@@ -144,51 +146,103 @@ function reverseGeocode(lat, lon, callback) {
     });
 }
 
+function watchLocation(resolve, reject) {
+    if (!navigator.geolocation) {
+        reject(new Error('Geolocation not supported'));
+        return;
+    }
+    locationWatchId = navigator.geolocation.watchPosition(
+        (position) => {
+            const acc = position.coords.accuracy;
+            if (!bestLocation || acc < bestLocation.accuracy) {
+                bestLocation = {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    accuracy: acc,
+                    timestamp: position.timestamp
+                };
+                // hentikan search lokasi setelah akurasi < 50 meter
+                if (acc < 50) {
+                    stopWatching();
+                    resolve(bestLocation);
+                }
+            }
+        },
+        (error) => {
+            stopWatching();
+            reject(error);
+        },
+        {
+            enableHighAccuracy: true,
+            timeout: 15000,
+            maximumAge: 0
+        }
+    );
+    setTimeout(() => {
+        if (bestLocation) {
+            stopWatching();
+            resolve(bestLocation);
+        } else {
+            stopWatching();
+            reject(new Error('Timeout'));
+        }
+    }, 30000);
+}
+
+function stopWatching() {
+    if (locationWatchId !== null) {
+        navigator.geolocation.clearWatch(locationWatchId);
+        locationWatchId = null;
+    }
+}
+
 if (allowLocationBtn) {
     allowLocationBtn.addEventListener('click', function() {
         closeModal(locationPermissionModal);
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                position => {
-                    const locData = {
-                        latitude: position.coords.latitude,
-                        longitude: position.coords.longitude,
-                        accuracy: position.coords.accuracy,
-                        timestamp: Date.now()
-                    };
-                    const encrypted = btoa(JSON.stringify(locData));
-                    localStorage.setItem('kitabku_location', encrypted);
+        bestLocation = null;
+        watchLocation(
+            (position) => {
+                const locData = {
+                    latitude: position.latitude,
+                    longitude: position.longitude,
+                    accuracy: position.accuracy,
+                    timestamp: Date.now()
+                };
+                const encrypted = btoa(JSON.stringify(locData));
+                localStorage.setItem('kitabku_location', encrypted);
 
-                    reverseGeocode(locData.latitude, locData.longitude, address => {
-                        let locationInfo = `<p>Lokasi anda berhasil didapatkan:</p>
-                            <p>Latitude: ${locData.latitude}<br>Longitude: ${locData.longitude}<br>Akurasi: ${locData.accuracy} meter<br></p>`;
-                        if (address) {
-                            locationInfo += `<p>Alamat: ${address}<br></p>`;
-                        } else {
-                            locationInfo += `<p>Alamat tidak dapat ditemukan! Pastikan GPS diperangkat anda aktif, terima kasih.</p>`;
-                        }
-                        locationInfo += `<p>Terima kasih telah mengizinkan akses lokasi anda. Jadwal adzan akan kami buat menggunakan penyesuaian dari lokasi anda.</p>`;
-                        locationResultMessage.innerHTML = locationInfo;
-                        openModal(locationResultModal);
-                    });
-
-                    setupPrayerTimes(locData);
-                },
-                error => {
-                    locationResultMessage.innerHTML = `<p>Gagal mendapatkan lokasi: ${error.message}. Pastikan GPS aktif dan coba lagi, terima kasih.</p>`;
+                reverseGeocode(locData.latitude, locData.longitude, address => {
+                    let locationInfo = `<p>Lokasi anda berhasil didapatkan dengan akurasi tinggi:</p>
+                        <p>Latitude: ${locData.latitude}<br>Longitude: ${locData.longitude}<br>Akurasi: ${locData.accuracy} meter<br>Timestamp: ${new Date(locData.timestamp).toLocaleString()}</p>`;
+                    if (address) {
+                        locationInfo += `<p>Alamat: ${address}<br></p>`;
+                    } else {
+                        locationInfo += `<p>Alamat tidak dapat ditemukan! Pastikan GPS diperangkat anda aktif, terima kasih.</p>`;
+                    }
+                    locationInfo += `<p>Terima kasih telah mengizinkan akses lokasi anda. Jadwal adzan akan kami buat menggunakan penyesuaian dari lokasi anda.</p>`;
+                    locationResultMessage.innerHTML = locationInfo;
                     openModal(locationResultModal);
-                }
-            );
-        } else {
-            locationResultMessage.innerHTML = '<p>Browser tidak mendukung geolokasi! Ganti browser anda dengan yang lebih modern dan pastikan GPS aktif, terima kasih.</p>';
-            openModal(locationResultModal);
-        }
+                });
+
+                setupPrayerTimes(locData);
+            },
+            (error) => {
+                let msg = 'Gagal mendapatkan lokasi. ';
+                if (error.code === 1) msg += 'Izin ditolak.';
+                else if (error.code === 2) msg += 'Posisi tidak tersedia.';
+                else if (error.code === 3) msg += 'Waktu habis.';
+                else msg += error.message;
+                locationResultMessage.innerHTML = `<p>${msg}. Pastikan GPS aktif dan coba lagi, terima kasih.</p>`;
+                openModal(locationResultModal);
+            }
+        );
     });
 }
 
 if (denyLocationBtn) {
     denyLocationBtn.addEventListener('click', function() {
         closeModal(locationPermissionModal);
+        stopWatching();
         sessionStorage.setItem('locationPermissionDenied', 'true');
         locationResultMessage.innerHTML = '<p>Anda menolak izin lokasi! Fitur alarm adzan tidak akan berfungsi karena jadwal adzan belom dibuat. Anda dapat mengaktifkannya kembali dengan cara berpindah halaman atau refresh browser, terima kasih.</p>';
         openModal(locationResultModal);
