@@ -682,5 +682,28 @@ body.artikel-page .card-title {
     50% { background-color: #ffcccc; }
     100% { background-color: #fcf6ed; }
 }
-.adzan-modal .modal-content {
+/* .adzan-modal .modal-content {
+} */
+
+.kitab-modal .paper-texture {
+    background-color: #f8e6c4;
+}
+
+.kitab-modal .modal-body {
+    font-family: 'Amiri', 'Traditional Arabic', 'Times New Roman', serif;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #3c2a1a;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+}
+
+.kitab-modal .modal-body p {
+    margin-bottom: 1.2rem;
+    text-align: justify;
+    hyphens: auto;
+}
+
+.highlight-text {
+    background-color: #f9e6b3 !important;
 }
