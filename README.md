@@ -53,12 +53,19 @@ To build the image locally, run the following command from the project root:
 docker build -t kitabku -f docker/Dockerfile .
 ```
 
-### Running
-To run the container:
-```bash
-docker run -d -p 8080:80 --name kitabku kitabku
-```
-Then visit `http://localhost:8080` in your browser.
+### Running with Docker Compose
+This project provides two Compose configurations:
+
+- **Ready-to-use (Production/Registry)**: Pulls the latest image from GHCR.
+  ```bash
+  docker compose -f docker/compose.yaml up -d
+  ```
+
+- **Local Development (Build)**: Builds the image from local source code.
+  ```bash
+  docker compose -f docker/compose-build.yaml up -d
+  ```
+Then visit `http://localhost:8080`.
 
 ### CI/CD with GitHub Actions
 This project includes a GitHub Action (`.github/workflows/docker-build.yml`) that automatically builds and pushes the image to Docker Hub on every push to the `main` branch. It supports both **AMD64** and **ARM64** architectures.
