@@ -1,7 +1,6 @@
 const urlParams = new URLSearchParams(window.location.search);
 const catKey = urlParams.get('cat');
 const topicId = urlParams.get('topic');
-
 const breadcrumb = document.getElementById('breadcrumb');
 const judul = document.getElementById('artikel-judul');
 const isi = document.getElementById('artikel-isi');
@@ -20,7 +19,6 @@ function processContent(content, tags) {
     }
     return processed;
 }
-
 function showError(message, withHomeLink = true) {
     document.title = 'Kitabku - Error';
     judul.textContent = 'Terjadi masalah';
@@ -31,7 +29,6 @@ function showError(message, withHomeLink = true) {
     isi.innerHTML = html;
     breadcrumb.innerHTML = `<a href="../index.html">Home</a> <span class="separator">›</span> <span>Error</span>`;
 }
-
 if (!catKey || !topicId) {
     showError('Tidak dapat menampilkan halaman untuk anda! Silahkan refresh halaman browser anda dan masukkan alamat url yang benar, terima kasih.', true);
 } else if (!categories[catKey]) {
@@ -44,7 +41,7 @@ if (!catKey || !topicId) {
     } else {
         if (!topic.content || topic.content.trim() === '') {
             document.title = `Kitabku - Dalam Pengembangan`;
-            judul.textContent = 'Masa pengembangan';
+            judul.textContent = 'Dalam pengembangan';
             isi.innerHTML = '<div class="catatan-text" style="text-align: center; font-size: 1.2rem;">Maaf, kami tidak dapat menampilkan halaman untuk anda saat ini! Silahkan tunggu beberapa hari kemudian untuk update lebih lanjut tentang halaman ini, terima kasih.</div>';
             breadcrumb.innerHTML = `<a href="../index.html">Home</a> <span class="separator">›</span> <a href="daftar.html?cat=${catKey}">${category.title}</a> <span class="separator">›</span> <span>${topic.title}</span>`;
         } else {
