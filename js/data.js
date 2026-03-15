@@ -11,14 +11,134 @@
 //    - tags: array of objects untuk setiap tombol yang ada di content. Setiap objek punya:
 //        * tag: teks tombol (harus sama persis dengan yang ada di content, tanpa kurung)
 //        * header: judul yang muncul di modal kitab (misal: "Minhajut Thalibin, Hlm 54 Jld 2")
-//        * kitab: isi teks arab (bisa panjang, gunakan template literal)
+//        * kitab: isi teks arab dengan gaya teks arab amiri dan ketik dengan keyboard arab
 
 const categories = {
+    hadats: {
+        title: "Bab Hadats",
+        topics: [
+            {
+                id: "macam-macam-najis",
+                title: "Macam Macam Najis",
+                content: `
+                `,
+                tags: [
+                    {
+                        tag: "",
+                        header: "",
+                        kitab: `
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;"></p>
+                        `
+                    }
+                ]
+            }
+        ]
+    },
+    haid: {
+        title: "Bab Haid",
+        topics: [
+            {
+                id: "weruh-darah-pemula",
+                title: "Pemula Sudah Tau Darah",
+                content: `
+                `,
+                tags: [
+                    {
+                        tag: "",
+                        header: "",
+                        kitab: `
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;"></p>
+                        `
+                    }
+                ]
+            }
+        ]
+    },
+    nifas: {
+        title: "Bab Nifas",
+        topics: [
+            {
+                id: "masa-sebentar-nifas",
+                title: "Masa Sebentarnya Nifas",
+                content: `
+                `,
+                tags: [
+                    {
+                        tag: "",
+                        header: "",
+                        kitab: `
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;"></p>
+                        `
+                    }
+                ]
+            }
+        ]
+    },
+    toharoh: {
+        title: "Bab Toharoh",
+        topics: [
+            {
+                id: "toharoh-mutawasitoh",
+                title: "Cara Membersihkan Madats Kecil",
+                content: `
+                `,
+                tags: [
+                    {
+                        tag: "",
+                        header: "",
+                        kitab: `
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;"></p>
+                        `
+                    }
+                ]
+            }
+        ]
+    },
+    wudhu: {
+        title: "Bab Wudhu",
+        topics: [
+            {
+                id: "syarat-wudhu",
+                title: "Syarat Wudhu",
+                content: `
+                `,
+                tags: [
+                    {
+                        tag: "",
+                        header: "",
+                        kitab: `
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;"></p>
+                        `
+                    }
+                ]
+            }
+        ]
+    },
+    tayamum: {
+        title: "Bab Tayamum",
+        topics: [
+            {
+                id: "syarat-tayamum",
+                title: "Syarat Tayamum",
+                content: `
+                `,
+                tags: [
+                    {
+                        tag: "",
+                        header: "",
+                        kitab: `
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;"></p>
+                        `
+                    }
+                ]
+            }
+        ]
+    },
     sholat: {
         title: "Bab Sholat",
         topics: [
             {
-                id: "rukun",
+                id: "rukun-sholat",
                 title: "Rukun Sholat",
                 content: `
                     <p>Rukun sholat adalah hal-hal yang harus dilakukan dalam sholat. Jika salah satu rukun ditinggalkan, sholat tidak sah.</p>
@@ -31,20 +151,20 @@ const categories = {
                         header: "Minhajut Thalibin, Hlm 54 Jld 1 Bab Sholat",
                         kitab: `
                             <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.4rem; line-height: 2;">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
-                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;">وَالصَّلَاةُ وَالسَّلَامُ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ. (هذا نص مثال للكتاب) ...</p>
-                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;">فَصْلٌ فِي أَرْكَانِ الصَّلَاةِ: أَرْكَانُ الصَّلَاةِ سَبْعَةَ عَشَرَ رُكْنًا ...</p>
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;">وَالصَّلَاةُ وَالسَّلَامُ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ. (هذا نص مثال للكتاب)</p>
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;">فَصْلٌ فِي أَرْكَانِ الصَّلَاةِ: أَرْكَانُ الصَّلَاةِ سَبْعَةَ عَشَرَ رُكْنًا</p>
                         `
                     },
                     {
                         tag: "Lihat Hlm 32",
-                        header: "Riyadhhhh bab test",
+                        header: "Fathul Qorib",
                         kitab: `
-                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;">وَالصَّلَاةُ وَالسَّلَامُ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ. (هذا نص مثال للكتاب) ...</p>
-                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;">فَصْلٌ فِي أَرْكَانِ الصَّلَاةِ: أَرْكَانُ الصَّلَاةِ سَبْعَةَ عَشَرَ رُكْنًا ...</p>
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;">وَالصَّلَاةُ وَالسَّلَامُ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ. (هذا نص مثال للكتاب)</p>
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;">فَصْلٌ فِي أَرْكَانِ الصَّلَاةِ: أَرْكَانُ الصَّلَاةِ سَبْعَةَ عَشَرَ رُكْنًا</p>
                         `
                     }
                 ]
-            },/*
+            }/*,
             {
                 id: "syarat",
                 title: "Syarat Sah Sholat",
@@ -77,7 +197,7 @@ const categories = {
         title: "Bab Puasa",
         topics: [
             {
-                id: "syarat",
+                id: "syarat-puasa",
                 title: "Syarat Puasa",
                 content: `
                 `,
@@ -92,34 +212,65 @@ const categories = {
                 ]
             }
         ]
-    }/*,
+    },
     zakat: {
         title: "Bab Zakat",
         topics: [
             {
-                id: "jenis",
-                title: "Jenis-jenis Zakat",
+                id: "syarat-zakat",
+                title: "Syarat Zakat",
                 content: `
-                    <p>Zakat terbagi menjadi zakat fitrah dan zakat mal. Zakat fitrah wajib dikeluarkan sebelum Idul Fitri, sedangkan zakat mal dikeluarkan jika harta mencapai nisab dan haul. ((Lihat Hlm 54 Jld 2)) ((Lihat Hlm 44))</p>
-                    !!Catatan: nisab zakat mal berbeda-beda tergantung jenis hartanya.!!
                 `,
                 tags: [
                     {
-                        tag: "Lihat Hlm 54 Jld 2",
-                        header: "Minhajut Thalibin, Hlm 54 Jld 2",
+                        tag: "",
+                        header: "",
                         kitab: `
-                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;">كِتَابُ الزَّكَاةِ: فَصْلٌ فِي زَكَاةِ النَّقْدَيْنِ: تَجِبُ الزَّكَاةُ فِي الذَّهَبِ وَالْفِضَّةِ إِذَا بَلَغَتْ نِصَابًا... وَأَمَّا زَكَاةُ الْفِطْرِ فَهِيَ صَاعٌ مِنْ طَعَامٍ... </p>
-                        `
-                    },
-                    {
-                        tag: "Lihat Hlm 44",
-                        header: "Fathul Qarib, Hlm 44",
-                        kitab: `
-                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;">وَمَنْ مَلَكَ نِصَابًا حَوْلًا كَامِلًا وَجَبَتْ عَلَيْهِ الزَّكَاةُ... وَزَكَاةُ الْفِطْرِ تُخْرَجُ قَبْلَ صَلَاةِ الْعِيدِ.</p>
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;"></p>
                         `
                     }
                 ]
             }
         ]
-    }*/
+    },
+    haji: {
+        title: "Bab Haji",
+        topics: [
+            {
+                id: "syarat-haji",
+                title: "Syarat haji",
+                content: `
+                `,
+                tags: [
+                    {
+                        tag: "",
+                        header: "",
+                        kitab: `
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;"></p>
+                        `
+                    }
+                ]
+            }
+        ]
+    },
+    bisnis: {
+        title: "Bab Jual Beli",
+        topics: [
+            {
+                id: "syarat-jual-beli",
+                title: "Syarat Jual Beli",
+                content: `
+                `,
+                tags: [
+                    {
+                        tag: "",
+                        header: "",
+                        kitab: `
+                            <p dir="rtl" style="font-family: 'Amiri', serif; font-size: 1.2rem;"></p>
+                        `
+                    }
+                ]
+            }
+        ]
+    }
 };
