@@ -123,7 +123,7 @@ body.artikel-page {
 }
 
 body.artikel-page .card-wrapper {
-    max-width: 800px;
+    max-width: 950px;
     margin-top: 40px;
 }
 
@@ -163,17 +163,19 @@ body.scrolled .dome-image {
 .card::-webkit-scrollbar {
     width: 6px;
 }
+
 .card::-webkit-scrollbar-track {
     background: #f0e2d2;
     border-radius: 10px;
 }
+
 .card::-webkit-scrollbar-thumb {
     background: #c4a27a;
     border-radius: 10px;
 }
 
 body.artikel-page .card {
-    max-height: 70vh;
+    max-height: 80vh;
     padding: 30px 35px 35px 35px;
 }
 
@@ -189,7 +191,7 @@ body.artikel-page .card {
 }
 
 .card-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     color: #4a3727;
     margin-bottom: 0;
     border-bottom: 2px solid #c4a27a;
@@ -199,7 +201,7 @@ body.artikel-page .card {
 }
 
 body.artikel-page .card-title {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
 }
 
 .lesson-list {
@@ -371,8 +373,8 @@ body.artikel-page .card-title {
 .paper-texture {
     background-color: #fcf6ed;
     background-image: 
-        linear-gradient(rgba(200, 170, 140, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(200, 170, 140, 0.1) 1px, transparent 1px);
+    linear-gradient(rgba(200, 170, 140, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 170, 140, 0.1) 1px, transparent 1px);
     background-size: 40px 40px;
     position: relative;
 }
@@ -436,10 +438,12 @@ body.artikel-page .card-title {
 .modal-body::-webkit-scrollbar {
     width: 6px;
 }
+
 .modal-body::-webkit-scrollbar-track {
     background: #f0e2d2;
     border-radius: 10px;
 }
+
 .modal-body::-webkit-scrollbar-thumb {
     background: #c4a27a;
     border-radius: 10px;
@@ -511,78 +515,99 @@ body.artikel-page .card-title {
     .header {
         padding: 15px 25px;
     }
+
     .breadcrumb-wrapper {
         padding: 0 25px 10px 25px;
     }
+
     .logo {
         width: 40px;
     }
+
     .site-title {
         font-size: 1.8rem;
     }
+
     .lamp-container {
         right: 40px;
         top: 15px;
     }
+
     .lamp {
         width: 45px;
     }
+
     .string {
         height: 35px;
     }
+
     .card-wrapper {
         max-width: 450px;
     }
+
     .dome-image {
         width: 70px;
         top: -35px;
     }
+
     .card {
         padding: 25px 20px 20px;
         max-height: 50vh;
     }
+
     .card-title {
         font-size: 1.6rem;
     }
+
     .lesson-list {
         font-size: 1rem;
     }
+
     .lesson-list li {
         padding: 8px 12px;
     }
+
     .modal-content {
         max-width: 90%;
         max-height: 75vh;
     }
+
     .modal-header {
         padding: 20px 20px 10px;
     }
+
     .modal-header h3 {
         font-size: 1.5rem;
     }
+
     .modal-body {
         padding: 15px 20px 25px;
     }
+
     .contact-item {
         padding: 10px 15px;
         font-size: 0.95rem;
     }
+
     .action-links {
         bottom: 15px;
         right: 15px;
         padding: 6px 12px;
     }
+
     .action-link {
         font-size: 0.9rem;
     }
 
     body.artikel-page .card-wrapper {
-        max-width: 95%;
+        max-width: 98%;
         margin-top: 30px;
     }
+
     body.artikel-page .card {
-        max-height: 60vh;
+        max-height: 70vh;
     }
+
     body.artikel-page .dome-image {
         top: -35px;
         width: 70px;
@@ -593,42 +618,54 @@ body.artikel-page .card-title {
     .logo {
         width: 35px;
     }
+
     .site-title {
         font-size: 1.5rem;
     }
+
     .lamp {
         width: 35px;
     }
+
     .string {
         height: 25px;
     }
+
     .card-wrapper {
         max-width: 320px;
     }
+
     .dome-image {
         width: 55px;
         top: -25px;
     }
+
     .card-title {
         font-size: 1.3rem;
     }
+
     .card {
         max-height: 55vh;
         padding: 20px 15px 15px;
     }
+
     .modal-content {
         max-height: 70vh;
     }
+
     .modal-header h3 {
         font-size: 1.3rem;
     }
+
     .modal-body {
         padding: 10px 15px 20px;
     }
+
     .contact-item {
         padding: 8px 12px;
         font-size: 0.85rem;
     }
+
     .contact-item i {
         font-size: 1.2rem;
         width: 24px;
@@ -637,6 +674,7 @@ body.artikel-page .card-title {
     .breadcrumb-wrapper {
         padding: 0 15px 8px 15px;
     }
+
     .breadcrumb {
         font-size: 0.9rem;
         padding: 4px 12px;
@@ -660,10 +698,12 @@ body.artikel-page .card-title {
         justify-content: flex-end;
         align-items: center;
     }
+
     .action-link {
         font-size: 0.85rem;
         padding: 4px 8px;
     }
+
     .separator {
         font-size: 1rem;
         display: inline-block;
@@ -682,6 +722,7 @@ body.artikel-page .card-title {
     50% { background-color: #ffcccc; }
     100% { background-color: #fcf6ed; }
 }
+
 /* .adzan-modal .modal-content {
 } */
 
