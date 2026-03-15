@@ -7,7 +7,6 @@ function openKitabModal(header, kontenArab) {
     kitabModalBody.innerHTML = kontenArab;
     kitabModal.classList.add('show');
 }
-
 function closeKitabModalFunc() {
     kitabModal.classList.remove('show');
 }
