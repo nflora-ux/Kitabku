@@ -17,16 +17,13 @@
             <h1 class="site-title">Kitabku</h1>
         </div>
     </header>
-
     <div class="breadcrumb-wrapper">
         <div class="breadcrumb" id="breadcrumb"></div>
     </div>
-
     <div class="lamp-container">
         <div class="string"></div>
         <img src="../img/bulan.png" alt="bulan" class="lamp">
     </div>
-
     <main class="main-content">
         <div class="card-wrapper">
             <img src="../img/alquran.png" alt="Al-Qur'an" class="dome-image">
@@ -38,13 +35,11 @@
             </div>
         </div>
     </main>
-
     <div class="action-links">
         <button class="action-link" id="licenseBtn">Licensi</button>
         <span class="separator">•</span>
         <button class="action-link" id="helpBtn">Kebijakan & Bantuan</button>
     </div>
-
     <div class="modal" id="licenseModal">
         <div class="modal-content paper-texture">
             <div class="modal-header">
@@ -60,7 +55,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal" id="helpModal">
         <div class="modal-content paper-texture">
             <div class="modal-header">
@@ -82,7 +76,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal kitab-modal" id="kitabModal">
         <div class="modal-content paper-texture">
             <div class="modal-header">
@@ -91,7 +84,6 @@
             <div class="modal-body" id="kitabModalBody"></div>
         </div>
     </div>
-
     <div class="modal" id="notificationModal">
         <div class="modal-content paper-texture">
             <div class="modal-header">
@@ -101,7 +93,6 @@
             <div class="modal-body" id="notificationMessage"></div>
         </div>
     </div>
-
     <div class="modal" id="locationPermissionModal">
         <div class="modal-content paper-texture">
             <div class="modal-header">
@@ -118,7 +109,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal" id="locationResultModal">
         <div class="modal-content paper-texture">
             <div class="modal-header">
@@ -128,7 +118,6 @@
             <div class="modal-body" id="locationResultMessage"></div>
         </div>
     </div>
-
     <div class="modal alarm-modal" id="alarmModal">
         <div class="modal-content paper-texture">
             <div class="modal-header">
@@ -138,7 +127,6 @@
             <div class="modal-body" id="alarmMessage"></div>
         </div>
     </div>
-
     <div class="modal adzan-modal" id="adzanModal">
         <div class="modal-content paper-texture">
             <div class="modal-header">
@@ -148,7 +136,6 @@
             <div class="modal-body" id="adzanMessage"></div>
         </div>
     </div>
-
     <script src="../js/PrayTimes.js"></script>
     <script src="../js/script.js"></script>
     <script src="../js/data.js"></script>
@@ -158,7 +145,6 @@
         (function() {
             const urlParams = new URLSearchParams(window.location.search);
             const catKey = urlParams.get('cat');
-
             const breadcrumb = document.getElementById('breadcrumb');
             const categoryTitle = document.getElementById('category-title');
             const topicList = document.getElementById('topic-list');
@@ -169,7 +155,6 @@
                 categoryTitle.textContent = 'Terjadi masalah';
                 topicList.innerHTML = `<p>${message}</p><p style="text-align: center; margin-top: 20px;"><a href="../index.html" style="display: inline-block; padding: 8px 16px; background: #c4a27a; color: white; border-radius: 40px; text-decoration: none;">Kembali ke Home</a></p>`;
             }
-
             if (!catKey) {
                 showError('Tidak dapat menampilkan halaman untuk anda! Silahkan refresh halaman browser anda dan masukkan alamat url yang benar, terima kasih.');
             } else if (!categories[catKey]) {
