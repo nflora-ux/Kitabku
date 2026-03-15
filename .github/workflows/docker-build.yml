@@ -10,6 +10,10 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -43,7 +47,7 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: |
-            ${{ vars.DOCKERHUB_USERNAME || 'kitabku' }}/kitabku
+            ${{ vars.DOCKERHUB_USERNAME != '' && format('{0}/kitabku', vars.DOCKERHUB_USERNAME) || '' }}
             ghcr.io/${{ github.repository }}
           tags: |
             type=ref,event=branch
@@ -58,7 +62,7 @@ jobs:
           context: .
           file: ./docker/Dockerfile
           platforms: linux/amd64,linux/arm64
-          push: ${{ github.event_name != 'pull_request' && vars.DOCKERHUB_USERNAME != '' }}
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
