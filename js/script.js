@@ -6,7 +6,6 @@ const closeButtons = document.querySelectorAll('.close-modal');
 const notificationModal = document.getElementById('notificationModal');
 const notificationMessage = document.getElementById('notificationMessage');
 const closeNotificationBtn = document.getElementById('closeNotificationModal');
-
 const locationPermissionModal = document.getElementById('locationPermissionModal');
 const closeLocationPermissionBtn = document.getElementById('closeLocationPermissionModal');
 const allowLocationBtn = document.getElementById('allowLocationBtn');
@@ -14,15 +13,12 @@ const denyLocationBtn = document.getElementById('denyLocationBtn');
 const locationResultModal = document.getElementById('locationResultModal');
 const locationResultMessage = document.getElementById('locationResultMessage');
 const closeLocationResultBtn = document.getElementById('closeLocationResultModal');
-
 const alarmModal = document.getElementById('alarmModal');
 const alarmMessage = document.getElementById('alarmMessage');
 const closeAlarmBtn = document.getElementById('closeAlarmModal');
-
 const adzanModal = document.getElementById('adzanModal');
 const adzanMessage = document.getElementById('adzanMessage');
 const closeAdzanBtn = document.getElementById('closeAdzanModal');
-
 let currentAlarmPlaying = false;
 let currentAdzanPlaying = false;
 let currentSapaPlaying = false;
@@ -39,7 +35,6 @@ function openModal(modal) {
 function closeModal(modal) {
     if (modal) modal.classList.remove('show');
 }
-
 function showNotification(msg) {
     if (notificationMessage) notificationMessage.innerHTML = msg;
     openModal(notificationModal);
@@ -50,7 +45,6 @@ function hideNotification() {
 if (closeNotificationBtn) {
     closeNotificationBtn.addEventListener('click', hideNotification);
 }
-
 if (licenseBtn && licenseModal) {
     licenseBtn.addEventListener('click', () => openModal(licenseModal));
 }
@@ -82,6 +76,7 @@ window.addEventListener('error', function(event) {
     console.error('Global error:', event.error);
     showNotification('<p>Terjadi kesalahan teknis. Silakan coba lagi nanti, terima kasih.</p><p><small>' + (event.message || '') + '</small></p>');
 });
+
 window.addEventListener('unhandledrejection', function(event) {
     console.error('Unhandled rejection:', event.reason);
     showNotification('<p>Terjadi kesalahan pada sistem. Kami akan segera memperbaikinya.</p><p><small>' + (event.reason || '') + '</small></p>');
@@ -90,6 +85,7 @@ window.addEventListener('unhandledrejection', function(event) {
 window.addEventListener('online', function() {
     showNotification('<p>Koneksi internet Anda kembali online! Silakan lanjutkan aktivitas anda sebelumnya, terima kasih.</p>');
 });
+
 window.addEventListener('offline', function() {
     showNotification('<p>Koneksi internet anda terputus! Beberapa fungsi mungkin tidak dapat berjalan dengan baik.</p>');
 });
@@ -113,23 +109,20 @@ function initPrayerTimes() {
         requestLocationPermission();
     }
 }
-
 function requestLocationPermission() {
     if (sessionStorage.getItem('locationPermissionDenied')) return;
     openModal(locationPermissionModal);
 }
-
 if (closeLocationPermissionBtn) {
     closeLocationPermissionBtn.addEventListener('click', function() {
         closeModal(locationPermissionModal);
     });
 }
-
 function reverseGeocode(lat, lon, callback) {
     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}&zoom=18&addressdetails=1`;
     fetch(url, {
         headers: {
-            'User-Agent': 'Kitabku/1.0 (userlinuxorg@gmail.com)'
+            'User-Agent': 'Kitabku (userlinuxorg@gmail.com)'
         }
     })
     .then(response => response.json())
@@ -145,7 +138,6 @@ function reverseGeocode(lat, lon, callback) {
         callback(null);
     });
 }
-
 function watchLocation(resolve, reject) {
     if (!navigator.geolocation) {
         reject(new Error('Geolocation not supported'));
@@ -188,14 +180,12 @@ function watchLocation(resolve, reject) {
         }
     }, 30000);
 }
-
 function stopWatching() {
     if (locationWatchId !== null) {
         navigator.geolocation.clearWatch(locationWatchId);
         locationWatchId = null;
     }
 }
-
 if (allowLocationBtn) {
     allowLocationBtn.addEventListener('click', function() {
         closeModal(locationPermissionModal);
@@ -227,7 +217,6 @@ if (allowLocationBtn) {
                     locationResultMessage.innerHTML = locationInfo;
                     openModal(locationResultModal);
                 });
-
                 setupPrayerTimes(locData);
             },
             (error) => {
@@ -242,7 +231,6 @@ if (allowLocationBtn) {
         );
     });
 }
-
 if (denyLocationBtn) {
     denyLocationBtn.addEventListener('click', function() {
         closeModal(locationPermissionModal);
@@ -252,13 +240,11 @@ if (denyLocationBtn) {
         openModal(locationResultModal);
     });
 }
-
 if (closeLocationResultBtn) {
     closeLocationResultBtn.addEventListener('click', function() {
         closeModal(locationResultModal);
     });
 }
-
 function setupPrayerTimes(locData) {
     if (typeof PrayTime === 'undefined') {
         console.error('PrayTime library not loaded');
@@ -268,7 +254,6 @@ function setupPrayerTimes(locData) {
     pray.adjust({ highLats: 'NightMiddle', tune: {} });
     const date = new Date();
     const times = pray.getTimes(date, [locData.latitude, locData.longitude], date.getTimezoneOffset() / -60, 0, '24h');
-    
     const prayerNames = ['fajr', 'dhuhr', 'asr', 'maghrib', 'isha'];
     const prayerTimes = {};
     prayerNames.forEach(name => {
@@ -285,12 +270,9 @@ function setupPrayerTimes(locData) {
         location: locData
     };
     localStorage.setItem('kitabku_prayer', JSON.stringify(prayerData));
-
     console.table(prayerTimes);
-
     startPrayerCheck(prayerTimes);
 }
-
 function startPrayerCheck(prayerTimes) {
     if (checkPrayerInterval) clearInterval(checkPrayerInterval);
     checkPrayerInterval = setInterval(() => {
@@ -298,7 +280,6 @@ function startPrayerCheck(prayerTimes) {
         const currentHour = now.getHours();
         const currentMinute = now.getMinutes();
         const currentTime = currentHour * 60 + currentMinute;
-
         for (let [name, timeStr] of Object.entries(prayerTimes)) {
             if (!timeStr || typeof timeStr !== 'string') {
                 console.warn(`Invalid time string for ${name}:`, timeStr);
@@ -317,7 +298,6 @@ function startPrayerCheck(prayerTimes) {
             }
             const prayerMin = hour * 60 + minute;
             const diff = prayerMin - currentTime;
-
             const displayName = name.charAt(0).toUpperCase() + name.slice(1);
 
             if (diff > 0 && diff <= 15 && !currentAlarmPlaying && !currentAdzanPlaying) {
@@ -326,7 +306,6 @@ function startPrayerCheck(prayerTimes) {
                     playAlarm(displayName);
                 }
             }
-
             if (diff > 0 && diff <= 1 && !currentSapaPlaying && !currentAdzanPlaying) {
                 playSapa(displayName);
             }
@@ -337,7 +316,6 @@ function startPrayerCheck(prayerTimes) {
         }
     }, 60000);
 }
-
 function playAlarm(prayerName) {
     if (currentAlarmPlaying) return;
     currentAlarmPlaying = true;
@@ -356,7 +334,6 @@ function playAlarm(prayerName) {
         closeModal(alarmModal);
     }, 600000);
 }
-
 function playSapa(prayerName) {
     if (currentSapaPlaying) return;
     currentSapaPlaying = true;
@@ -371,7 +348,6 @@ function playSapa(prayerName) {
         currentSapaPlaying = false;
     }, 60000);
 }
-
 function playAdzan(prayerName) {
     if (currentAdzanPlaying) return;
     currentAdzanPlaying = true;
@@ -385,7 +361,6 @@ function playAdzan(prayerName) {
         adzanAudio = null;
     };
 }
-
 if (closeAlarmBtn) {
     closeAlarmBtn.addEventListener('click', function() {
         closeModal(alarmModal);
@@ -397,7 +372,6 @@ if (closeAlarmBtn) {
         currentAlarmPlaying = false;
     });
 }
-
 if (closeAdzanBtn) {
     closeAdzanBtn.addEventListener('click', function() {
         closeModal(adzanModal);
